@@ -176,7 +176,7 @@ def load_ckpt(ckpt, kp_detector, generator, audio2kptransformer, sidetuning, emo
 
 def test_mead(ckpt, part=0, mode='sample', save_dir=" "):
     with open("config/deepprompt_eam3d_st_tanh_304_3090_all.yaml") as f:
-        config = yaml.load(f)
+        config = yaml.load(f, Loader=yaml.FullLoader)
     cur_path = os.getcwd()
     print('========='*2)
     print('Load ckpt.')

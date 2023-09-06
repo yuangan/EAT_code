@@ -1,0 +1,17 @@
+dlib==19.24.2
+imageio==2.9.0
+iou==0.1.0
+munch==4.0.0
+numpy==1.23.5
+opencv_contrib_python==4.7.0.72
+opencv_python==4.7.0.72
+opencv_python_headless==4.7.0.68
+Pillow==10.0.0
+PyYAML==6.0.1
+scipy==1.9.1
+scikit-image
+soundfile==0.12.1
+torch==1.11.0
+torchaudio
+torchvision==0.12.0
+tqdm==4.65.0

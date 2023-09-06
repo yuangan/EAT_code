@@ -231,7 +231,7 @@ from sync_batchnorm import DataParallelWithCallback
 def load_checkpoints_extractor(config_path, checkpoint_path, cpu=False):
 
     with open(config_path) as f:
-        config = yaml.load(f)
+        config = yaml.load(f, Loader=yaml.FullLoader)
 
     kp_detector = KPDetector(**config['model_params']['kp_detector_params'],
                              **config['model_params']['common_params'])
@@ -306,7 +306,7 @@ def preprocess_cropped_imgs(allimgs_cropped):
 def test(ckpt, emotype, save_dir=" "):
     # with open("config/vox-transformer2.yaml") as f:
     with open("config/deepprompt_eam3d_st_tanh_304_3090_all.yaml") as f:
-        config = yaml.load(f)
+        config = yaml.load(f, Loader=yaml.FullLoader)
     cur_path = os.getcwd()
     generator, kp_detector, audio2kptransformer, sidetuning, emotionprompt = build_model(config)
     load_ckpt(ckpt, kp_detector=kp_detector, generator=generator, audio2kptransformer=audio2kptransformer, sidetuning=sidetuning, emotionprompt=emotionprompt)
