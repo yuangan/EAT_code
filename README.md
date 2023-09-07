@@ -17,7 +17,7 @@
 **<a href="https://colab.research.google.com/drive/133hwDHzsfRYl-nQCUQxJGjcXa5Fae22Z#scrollTo=GWqHlw6kKrbo"><img src="https://colab.research.google.com/assets/colab-badge.svg" height="20" alt="google colab logo"></a>**
 [![License](https://img.shields.io/badge/License-MIT-green.svg)]()
 
-![EAT teaser gif](./doc/.mp4)
+![EAT](./doc/web_intro2.mp4)
 
 </div>
 <div align="justify">
@@ -37,7 +37,8 @@
 * Baselines
 
 # Environment
+Recommend trying the demo in [Colab](https://colab.research.google.com/drive/133hwDHzsfRYl-nQCUQxJGjcXa5Fae22Z#scrollTo=GWqHlw6kKrbo) for the quickest configuration.
 
+</div>
 
-# Environment
 
