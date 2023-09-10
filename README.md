@@ -64,7 +64,7 @@ If you want to process your video, please let us know. We will publish the pre-p
 * Baselines
 
 # Acknowledge
-We acknowledge these works for their public code and help: [EAMM](), [OSFV(unofficial)](), [PC-AVS](), [AVCT]() and so on.
+We acknowledge these works for their public code and help: [EAMM](https://github.com/jixinya/EAMM), [OSFV(unofficial)](https://github.com/zhanglonghao1992/One-Shot_Free-View_Neural_Talking_Head_Synthesis), [AVCT](https://github.com/FuxiVirtualHuman/AAAI22-one-shot-talking-face), [PC-AVS](https://github.com/Hangz-nju-cuhk/Talking-Face_PC-AVS) and so on.
 </div>
 
 
