@@ -51,7 +51,7 @@ gdown --id 1HGVzckXh-vYGZEUUKMntY1muIbkbnRcd && unzip -q Utils.zip -d Utils
 ```
 
 # Run demo
-Run the code under our eat environment.
+Run the code under our <strong>eat<\strong> environment with ```conda activate eat```.
 
 ```python demo.py --root_wav ./demo/video_processed/W015_neu_1_002 --emo hap```
 
