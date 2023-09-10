@@ -43,7 +43,7 @@ Recommend to use [mamba](https://github.com/conda-forge/miniforge#mambaforge), f
 ```conda/mamba env create -f environment.yml```
 
 # Checkpoints && Demo dependencies
-In the EAT_code filefold, Use gdown or download and unzip the [ckpt](), demo [data]() and [dependencies]() to the specific filefold.
+In the EAT_code folder, Use gdown or download and unzip the [ckpt](https://drive.google.com/file/d/1KK15n2fOdfLECWN5wvX54mVyDt18IZCo/view?usp=drive_link), [demo](https://drive.google.com/file/d/1MeFGC7ig-vgpDLdhh2vpTIiElrhzZmgT/view?usp=drive_link) and [Utils](https://drive.google.com/file/d/1HGVzckXh-vYGZEUUKMntY1muIbkbnRcd/view?usp=drive_link) to the specific folder.
 ```
 gdown --id 1KK15n2fOdfLECWN5wvX54mVyDt18IZCo && unzip -q ckpt.zip -d ckpt
 gdown --id 1MeFGC7ig-vgpDLdhh2vpTIiElrhzZmgT && unzip -q demo.zip -d demo
@@ -51,7 +51,7 @@ gdown --id 1HGVzckXh-vYGZEUUKMntY1muIbkbnRcd && unzip -q Utils.zip -d Utils
 ```
 
 # Run demo
-Run the code under our <strong>eat<\strong> environment with ```conda activate eat```.
+Run the code under our <strong>eat</trong> environment with ```conda activate eat```.
 
 ```python demo.py --root_wav ./demo/video_processed/W015_neu_1_002 --emo hap```
 
