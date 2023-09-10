@@ -17,7 +17,7 @@
 **<a href="https://colab.research.google.com/drive/133hwDHzsfRYl-nQCUQxJGjcXa5Fae22Z#scrollTo=GWqHlw6kKrbo"><img src="https://colab.research.google.com/assets/colab-badge.svg" height="20" alt="google colab logo"></a>**
 [![License](https://img.shields.io/badge/License-MIT-green.svg)]()
 
-![EAT](./doc/web_intro2.mp4)
+![EAT](./doc/web_intro2.gif)
 
 </div>
 <div align="justify">
