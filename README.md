@@ -30,12 +30,6 @@
 **News**
 * 07/09/2023 Release the pre-trained weight and inference code.
 
-**TODO**
-* Preprocess Code
-* Evaluation Code
-* Training Dataset
-* Baselines
-
 # Environment
 Recommend trying the demo in [Colab](https://colab.research.google.com/drive/133hwDHzsfRYl-nQCUQxJGjcXa5Fae22Z#scrollTo=GWqHlw6kKrbo) for the quickest configuration.
 
@@ -61,6 +55,13 @@ Run the code under our <strong>eat</strong> environment with ```conda activate e
 <strong>emo</strong>: ['ang',  'con',  'dis',  'fea',  'hap',  'neu',  'sad',  'sur']
 
 If you want to process your video, please let us know. We will publish the pre-process code as soon as possible.
+
+**TODO**
+* Add MEAD test
+* Preprocess Code
+* Evaluation Code
+* Training Dataset
+* Baselines
 
 </div>
 
