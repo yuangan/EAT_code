@@ -30,7 +30,6 @@
 * 07/09/2023 Release the pre-trained weight and inference code.
 
 **TODO**
-* Add README
 * Preprocess Code
 * Evaluation Code
 * Training Dataset
@@ -38,6 +37,29 @@
 
 # Environment
 Recommend trying the demo in [Colab](https://colab.research.google.com/drive/133hwDHzsfRYl-nQCUQxJGjcXa5Fae22Z#scrollTo=GWqHlw6kKrbo) for the quickest configuration.
+
+Recommend to use [mamba](https://github.com/conda-forge/miniforge#mambaforge), faster than conda, to install dependencies. 
+
+```conda/mamba env create -f environment.yml```
+
+# Checkpoints && Demo dependencies
+In the EAT_code filefold, Use gdown or download and unzip the [ckpt](), demo [data]() and [dependencies]() to the specific filefold.
+```
+gdown --id 1KK15n2fOdfLECWN5wvX54mVyDt18IZCo && unzip -q ckpt.zip -d ckpt
+gdown --id 1MeFGC7ig-vgpDLdhh2vpTIiElrhzZmgT && unzip -q demo.zip -d demo
+gdown --id 1HGVzckXh-vYGZEUUKMntY1muIbkbnRcd && unzip -q Utils.zip -d Utils
+```
+
+# Run demo
+Run the code under our eat environment.
+
+```python demo.py --root_wav ./demo/video_processed/W015_neu_1_002 --emo hap```
+
+<strong>root_wav</strong>: ['obama', 'M003_neu_1_001', 'W015_neu_1_002', 'W009_sad_3_003', 'M030_ang_3_004'] (preprocessed wavs are at ./demo/video_processed/. The obama wav is about 5 mins, while others are much shorter.)
+
+<strong>emo</strong>: ['ang',  'con',  'dis',  'fea',  'hap',  'neu',  'sad',  'sur']
+
+If you want to process your video, please let us know. We will publish the pre-process code as soon as possible.
 
 </div>
 
