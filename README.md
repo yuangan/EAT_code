@@ -53,7 +53,7 @@ gdown --id 1HGVzckXh-vYGZEUUKMntY1muIbkbnRcd && unzip -q Utils.zip -d Utils
 # Run demo
 Run the code under our <strong>eat</strong> environment with ```conda activate eat```.
 
-```python demo.py --root_wav ./demo/video_processed/W015_neu_1_002 --emo hap```
+```CUDA_VISIBLE_DEVICES=0 python demo.py --root_wav ./demo/video_processed/W015_neu_1_002 --emo hap```
 
 <strong>root_wav</strong>: ['obama', 'M003_neu_1_001', 'W015_neu_1_002', 'W009_sad_3_003', 'M030_ang_3_004'] (preprocessed wavs are at ./demo/video_processed/. The obama wav is about 5 mins, while others are much shorter.)
 
