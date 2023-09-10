@@ -27,7 +27,7 @@
 
 
 
-**News**
+**News:**
 * 07/09/2023 Release the pre-trained weight and inference code.
 
 # Environment
@@ -56,7 +56,7 @@ Run the code under our <strong>eat</strong> environment with ```conda activate e
 
 If you want to process your video, please let us know. We will publish the pre-process code as soon as possible.
 
-**TODO**
+**TODO:**
 * Add MEAD test
 * Preprocess Code
 * Evaluation Code
