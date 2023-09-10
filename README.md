@@ -63,6 +63,8 @@ If you want to process your video, please let us know. We will publish the pre-p
 * Training Dataset
 * Baselines
 
+# Acknowledge
+We acknowledge these works for their public code and help: [EAMM](), [OSFV(unofficial)](), [PC-AVS](), [AVCT]() and so on.
 </div>
 
 
