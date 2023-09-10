@@ -1,6 +1,6 @@
 <div align="center">
 
-# Efficient Emotional Adaptation for Audio-Driven Talking-Head Generation (EAT <img src="https://colab.research.google.com/assets/colab-badge.svg" height="20" alt="google colab logo">)
+# Efficient Emotional Adaptation for Audio-Driven Talking-Head Generation (EAT <a href="https://github.com/yuangan/EAT_code"><img src="./doc/favicon_eat.png" style="width: 25px;"></a>)
 
 <a href="https://yuangan.github.io/"><strong>Yuan Gan</strong></a>
 ·
