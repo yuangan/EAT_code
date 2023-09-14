@@ -56,9 +56,18 @@ Run the code under our <strong>eat</strong> environment with ```conda activate e
 
 If you want to process your video, please let us know. We will publish the pre-process code as soon as possible.
 
+# Test MEAD
+To reproduce the results of MEAD as reported in our paper, follow these steps:
+1. Download the additional MEAD test data from mead_data and unzip it into the mead_data directory:
+```gdown --id 1KK15n2fOdfLECWN5wvX54mVyDt18IZCo && unzip -q mead_data.zip -d mead_data```
+2. Execute the test using the following command:
+```CUDA_VISIBLE_DEVICES=0 python test_mead.py [--part 0/1/2/3] [--mode 0]```
+
+- **Parameters**:
+  - **part**: Choose from [0, 1, 2, 3]. These represent the four test parts in the MEAD test data.
+  - **mode**: Choose from [0, 1]. Where `0` tests only 100 samples in total, and `1` tests all 985 samples in every part.
 
 **TODO:**
-* Add MEAD test
 * Preprocess Code
 * Evaluation Code
 * Training Dataset
