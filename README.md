@@ -31,11 +31,11 @@
 * 07/09/2023 Release the pre-trained weight and inference code.
 
 # Environment
-Recommend trying the demo in [Colab](https://colab.research.google.com/drive/133hwDHzsfRYl-nQCUQxJGjcXa5Fae22Z#scrollTo=GWqHlw6kKrbo) for the quickest configuration.
-
-Recommend to use [mamba](https://github.com/conda-forge/miniforge#mambaforge), faster than conda, to install dependencies. 
+For the quickest configuration, it's recommended to try the demo in [Colab](https://colab.research.google.com/drive/133hwDHzsfRYl-nQCUQxJGjcXa5Fae22Z#scrollTo=GWqHlw6kKrbo).
 
 ```conda/mamba env create -f environment.yml```
+
+**Note**: We recommend using [mamba](https://github.com/conda-forge/miniforge#mambaforge) to install dependencies, which is faster than conda.
 
 # Checkpoints && Demo dependencies
 In the EAT_code folder, Use gdown or download and unzip the [ckpt](https://drive.google.com/file/d/1KK15n2fOdfLECWN5wvX54mVyDt18IZCo/view?usp=drive_link), [demo](https://drive.google.com/file/d/1MeFGC7ig-vgpDLdhh2vpTIiElrhzZmgT/view?usp=drive_link) and [Utils](https://drive.google.com/file/d/1HGVzckXh-vYGZEUUKMntY1muIbkbnRcd/view?usp=drive_link) to the specific folder.
