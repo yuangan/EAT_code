@@ -65,7 +65,7 @@ If you wish to process your own video, please inform us. We plan to release the 
 # Test MEAD
 To reproduce the results of MEAD as reported in our paper, follow these steps:
 
-First, Download the additional MEAD test data from mead_data and unzip it into the mead_data directory:
+First, Download the additional MEAD test data from [mead_data](https://drive.google.com/file/d/1_6OfvP1B5zApXq7AIQm68PZu1kNyMwUY/view?usp=drive_link) and unzip it into the mead_data directory:
    
 ```gdown --id 1_6OfvP1B5zApXq7AIQm68PZu1kNyMwUY && unzip -q mead_data.zip -d mead_data```
 
