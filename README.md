@@ -82,6 +82,7 @@ Then, Execute the test using the following command:
 * Evaluation Code
 * Training Dataset
 * Baselines
+* Training Code
 
 # Acknowledge
 We acknowledge these works for their public code and selfless help: [EAMM](https://github.com/jixinya/EAMM), [OSFV (unofficial)](https://github.com/zhanglonghao1992/One-Shot_Free-View_Neural_Talking_Head_Synthesis), [AVCT](https://github.com/FuxiVirtualHuman/AAAI22-one-shot-talking-face), [PC-AVS](https://github.com/Hangz-nju-cuhk/Talking-Face_PC-AVS) and so on.
