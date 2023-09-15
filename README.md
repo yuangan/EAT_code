@@ -67,6 +67,7 @@ To reproduce the results of MEAD as reported in our paper, follow these steps:
 1. Download the additional MEAD test data from mead_data and unzip it into the mead_data directory:
    
 ```gdown --id 1KK15n2fOdfLECWN5wvX54mVyDt18IZCo && unzip -q mead_data.zip -d mead_data```
+
 2. Execute the test using the following command:
    
 ```CUDA_VISIBLE_DEVICES=0 python test_mead.py [--part 0/1/2/3] [--mode 0]```
