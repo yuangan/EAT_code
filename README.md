@@ -67,7 +67,7 @@ To reproduce the results of MEAD as reported in our paper, follow these steps:
 
 First, Download the additional MEAD test data from mead_data and unzip it into the mead_data directory:
    
-```gdown --id 1KK15n2fOdfLECWN5wvX54mVyDt18IZCo && unzip -q mead_data.zip -d mead_data```
+```gdown --id 1_6OfvP1B5zApXq7AIQm68PZu1kNyMwUY && unzip -q mead_data.zip -d mead_data```
 
 Then, Execute the test using the following command:
    
