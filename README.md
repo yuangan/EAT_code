@@ -75,7 +75,7 @@ Then, Execute the test using the following command:
 
 - **Parameters**:
   - **part**: Choose from [0, 1, 2, 3]. These represent the four test parts in the MEAD test data.
-  - **mode**: Choose from [0, 1]. Where `0` tests only 100 samples in total, and `1` tests all 985 samples in every part.
+  - **mode**: Choose from [0, 1]. Where `0` tests only 100 samples in total, and `1` tests all samples (985 in total).
 
 **TODO:**
 * Preprocess Code
