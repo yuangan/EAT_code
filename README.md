@@ -45,16 +45,22 @@ gdown --id 1MeFGC7ig-vgpDLdhh2vpTIiElrhzZmgT && unzip -q demo.zip -d demo
 gdown --id 1HGVzckXh-vYGZEUUKMntY1muIbkbnRcd && unzip -q Utils.zip -d Utils
 ```
 
-# Run demo
-Run the code under our <strong>eat</strong> environment with ```conda activate eat```.
+# Demo
+Execute the code within our <strong>eat</strong> environment using the command: 
+
+```conda activate eat```
+
+Then, run the demo with:
 
 ```CUDA_VISIBLE_DEVICES=0 python demo.py --root_wav ./demo/video_processed/W015_neu_1_002 --emo hap```
 
-<strong>root_wav</strong>: ['obama', 'M003_neu_1_001', 'W015_neu_1_002', 'W009_sad_3_003', 'M030_ang_3_004'] (preprocessed wavs are at ./demo/video_processed/. The obama wav is about 5 mins, while others are much shorter.)
+- **Parameters**:
+  - **root_wav**: Choose from ['obama', 'M003_neu_1_001', 'W015_neu_1_002', 'W009_sad_3_003', 'M030_ang_3_004']. Preprocessed wavs are located in ```./demo/video_processed/```. The 'obama' wav is approximately 5 minutes long, while the others are much shorter.
+  - **emo**: Choose from ['ang',  'con',  'dis',  'fea',  'hap',  'neu',  'sad',  'sur']
 
-<strong>emo</strong>: ['ang',  'con',  'dis',  'fea',  'hap',  'neu',  'sad',  'sur']
+**Note**: Place your own images in ```./demo/imgs/``` and run the above command to generate talking-head videos with aligned new portraits. If you prefer not to align your portrait, simply place your cropped image (256x256) in ```./demo/imgs_cropped```. Due to the background used in the MEAD training set, results tend to be better with a similar background.
 
-If you want to process your video, please let us know. We will publish the pre-process code as soon as possible.
+If you wish to process your own video, please inform us. We plan to release the preprocessing code as soon as possible.
 
 # Test MEAD
 To reproduce the results of MEAD as reported in our paper, follow these steps:
