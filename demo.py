@@ -135,7 +135,14 @@ def prepare_test_data(img_path, audio_path, opt, emotype, use_otherimg=True):
     deep_feature = []
 
     pad, deep_pad = np.load('pad.npy', allow_pickle=True)
-
+    
+    if name_len < num_frames:
+        diff = num_frames - name_len
+        if diff > 2:
+            print(f"Attention: the frames are {diff} more than name_len, we will use name_len to replace num_frames")
+            num_frames=name_len
+            for k in he_driving.keys():
+                he_driving[k] = he_driving[k][:name_len, :]
     for rid in range(0, num_frames):
         audio = []
         poses = []
