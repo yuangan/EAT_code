@@ -29,6 +29,7 @@
 
 **News:**
 * 07/09/2023 Release the pre-trained weight and inference code.
+* 21/09/2023 Release the preprocessing code. Now, EAT can generate emotional talking-head videos with <strong>any</strong> portrait and driven video. Thank you for your patience~:tada:
 
 # Environment
 For the quickest configuration, it's recommended to try the demo in [Colab](https://colab.research.google.com/drive/133hwDHzsfRYl-nQCUQxJGjcXa5Fae22Z#scrollTo=GWqHlw6kKrbo).
@@ -60,8 +61,6 @@ Then, run the demo with:
 
 **Note**: Place your own images in ```./demo/imgs/``` and run the above command to generate talking-head videos with aligned new portraits. If you prefer not to align your portrait, simply place your cropped image (256x256) in ```./demo/imgs_cropped```. Due to the background used in the MEAD training set, results tend to be better with a similar background.
 
-If you wish to process your own video, please inform us. We plan to release the preprocessing code as soon as possible.
-
 # Test MEAD
 To reproduce the results of MEAD as reported in our paper, follow these steps:
 
@@ -77,15 +76,33 @@ Then, Execute the test using the following command:
   - **part**: Choose from [0, 1, 2, 3]. These represent the four test parts in the MEAD test data.
   - **mode**: Choose from [0, 1]. Where `0` tests only 100 samples in total, and `1` tests all samples (985 in total).
 
+# Preprocessing
+If you want to test with your own driven video that includes audio, place your video (which should have audio) in the ```preprocess/video```. Then execute the preprocessing code:
+
+```
+cd preprocess
+python preprocess_video.py
+```
+
+The video will be processed and saved in the ```demo/video_processed```. To test it, run:
+
+```CUDA_VISIBLE_DEVICES=0 python demo.py --root_wav ./demo/video_processed/[fill in your video name] --emo [fill in emotion name]```
+
+The videos should contain only one person. We will crop the input video according to the estimated landmark of the first frame. Refer to these [video](https://drive.google.com/file/d/1sAoplzY4b6JCW0JQHf_HKEL5luuWuGAk/view?usp=drive_link) for more details.
+
+**Note**: The preprocessing code has been verified to work correctly with TensorFlow version 1.15.0, which can be installed on Python 3.7. Refer to this [issue]((https://github.com/YudongGuo/AD-NeRF/issues/69)) for more information. We have updated the environment.yml file for preprocessing; please reinstall the **eat** environment if needed.
+
 **TODO:**
-* Preprocess Code
 * Evaluation Code
 * Training Dataset
 * Baselines
 * Training Code
 
+# Contact
+Our code is intended solely for research purposes. If you have any questions or wish to use it for commercial purposes, please contact me at ganyuan@zju.edu.cn
+
 # Acknowledge
-We acknowledge these works for their public code and selfless help: [EAMM](https://github.com/jixinya/EAMM), [OSFV (unofficial)](https://github.com/zhanglonghao1992/One-Shot_Free-View_Neural_Talking_Head_Synthesis), [AVCT](https://github.com/FuxiVirtualHuman/AAAI22-one-shot-talking-face), [PC-AVS](https://github.com/Hangz-nju-cuhk/Talking-Face_PC-AVS) and so on.
+We acknowledge these works for their public code and selfless help: [EAMM](https://github.com/jixinya/EAMM), [OSFV (unofficial)](https://github.com/zhanglonghao1992/One-Shot_Free-View_Neural_Talking_Head_Synthesis), [AVCT](https://github.com/FuxiVirtualHuman/AAAI22-one-shot-talking-face), [PC-AVS](https://github.com/Hangz-nju-cuhk/Talking-Face_PC-AVS), [Vid2Vid](https://github.com/NVIDIA/vid2vid), [AD-NeRF](https://github.com/YudongGuo/AD-NeRF) and so on.
 </div>
 
 
