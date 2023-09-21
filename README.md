@@ -88,7 +88,7 @@ The video will be processed and saved in the ```demo/video_processed```. To test
 
 ```CUDA_VISIBLE_DEVICES=0 python demo.py --root_wav ./demo/video_processed/[fill in your video name] --emo [fill in emotion name]```
 
-The videos should contain only one person. And the code is not restricted by the size of the input video. Refer to these [video](https://drive.google.com/file/d/1sAoplzY4b6JCW0JQHf_HKEL5luuWuGAk/view?usp=drive_link) for more details.
+The videos should contain only one person. We will crop the input video according to the estimated landmark of the first frame. Refer to these [video](https://drive.google.com/file/d/1sAoplzY4b6JCW0JQHf_HKEL5luuWuGAk/view?usp=drive_link) for more details.
 
 **Note**: The preprocessing code has been verified to work correctly with TensorFlow version 1.15.0, which can be installed on Python 3.7. Refer to this [issue]((https://github.com/YudongGuo/AD-NeRF/issues/69)) for more information. We have updated the environment.yml file for preprocessing; please reinstall the **eat** environment if needed.
 
@@ -99,7 +99,7 @@ The videos should contain only one person. And the code is not restricted by the
 * Training Code
 
 # Acknowledge
-We acknowledge these works for their public code and selfless help: [EAMM](https://github.com/jixinya/EAMM), [OSFV (unofficial)](https://github.com/zhanglonghao1992/One-Shot_Free-View_Neural_Talking_Head_Synthesis), [AVCT](https://github.com/FuxiVirtualHuman/AAAI22-one-shot-talking-face), [PC-AVS](https://github.com/Hangz-nju-cuhk/Talking-Face_PC-AVS) and so on.
+We acknowledge these works for their public code and selfless help: [EAMM](https://github.com/jixinya/EAMM), [OSFV (unofficial)](https://github.com/zhanglonghao1992/One-Shot_Free-View_Neural_Talking_Head_Synthesis), [AVCT](https://github.com/FuxiVirtualHuman/AAAI22-one-shot-talking-face), [PC-AVS](https://github.com/Hangz-nju-cuhk/Talking-Face_PC-AVS), [Vid2Vid](https://github.com/NVIDIA/vid2vid), [AD-NeRF](https://github.com/YudongGuo/AD-NeRF) and so on.
 </div>
 
 
