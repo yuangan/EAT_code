@@ -32,7 +32,7 @@ class FaceDataset(BaseDataset):
     def __getitem__(self, index):
         if self.frame_idx >= len(self.A_paths):
             print('==================done=====================')
-            ### ugly but work, if you can correct this, welcome to pull requests
+            ### It's not pretty, but it works. If you can improve it, pull requests are welcome.
             assert(0)
         A_path = self.A_paths[index]
         Asp = os.path.basename(A_path)[:-4]
