@@ -59,7 +59,9 @@ Then, run the demo with:
   - **root_wav**: Choose from ['obama', 'M003_neu_1_001', 'W015_neu_1_002', 'W009_sad_3_003', 'M030_ang_3_004']. Preprocessed wavs are located in ```./demo/video_processed/```. The 'obama' wav is approximately 5 minutes long, while the others are much shorter.
   - **emo**: Choose from ['ang',  'con',  'dis',  'fea',  'hap',  'neu',  'sad',  'sur']
 
-**Note**: Place your own images in ```./demo/imgs/``` and run the above command to generate talking-head videos with aligned new portraits. If you prefer not to align your portrait, simply place your cropped image (256x256) in ```./demo/imgs_cropped```. Due to the background used in the MEAD training set, results tend to be better with a similar background.
+**Note 1**: Place your own images in ```./demo/imgs/``` and run the above command to generate talking-head videos with aligned new portraits. If you prefer not to align your portrait, simply place your cropped image (256x256) in ```./demo/imgs_cropped```. Due to the background used in the MEAD training set, results tend to be better with a similar background.
+
+**Note 2**: Replace the ```video_name/video_name.wav``` and deepspeech feature ```video_name/deepfeature32/video_name.npy```, you can test with a new wav. The output length will depend on the shortest length of the audio and driven poses. Refer to [here](https://github.com/yuangan/EAT_code/blob/main/demo.py#L139) for more details.
 
 # Test MEAD
 To reproduce the results of MEAD as reported in our paper, follow these steps:
