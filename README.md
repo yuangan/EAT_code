@@ -103,6 +103,19 @@ The videos should contain only one person. We will crop the input video accordin
 # Contact
 Our code is intended solely for research purposes. If you have any questions or wish to use it for commercial purposes, please contact me at ganyuan@zju.edu.cn
 
+# Citation
+If you find this code helpful for your research, please cite:
+```
+@InProceedings{Gan_2023_ICCV,
+    author    = {Gan, Yuan and Yang, Zongxin and Yue, Xihang and Sun, Lingyun and Yang, Yi},
+    title     = {Efficient Emotional Adaptation for Audio-Driven Talking-Head Generation},
+    booktitle = {Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV)},
+    month     = {October},
+    year      = {2023},
+    pages     = {22634-22645}
+}
+```
+
 # Acknowledge
 We acknowledge these works for their public code and selfless help: [EAMM](https://github.com/jixinya/EAMM), [OSFV (unofficial)](https://github.com/zhanglonghao1992/One-Shot_Free-View_Neural_Talking_Head_Synthesis), [AVCT](https://github.com/FuxiVirtualHuman/AAAI22-one-shot-talking-face), [PC-AVS](https://github.com/Hangz-nju-cuhk/Talking-Face_PC-AVS), [Vid2Vid](https://github.com/NVIDIA/vid2vid), [AD-NeRF](https://github.com/YudongGuo/AD-NeRF) and so on.
 </div>
