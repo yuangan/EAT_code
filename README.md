@@ -28,8 +28,9 @@
 
 
 **News:**
-* 07/09/2023 Release the pre-trained weight and inference code.
-* 21/09/2023 Release the preprocessing code. Now, EAT can generate emotional talking-head videos with <strong>any</strong> portrait and driven video. Thank you for your patience~:tada:
+* 07/09/2023 Released the pre-trained weight and inference code.
+* 21/09/2023 Released the preprocessing code. Now, EAT can generate emotional talking-head videos with <strong>any</strong> portrait and driven video. Thank you for your patience~:tada:
+* 17/10/2023 Released the evaluation code for the MEAD test results. For more information, please refer to [evaluation_eat](https://github.com/yuangan/evaluation_eat).
 
 # Environment
 For the quickest configuration, it's recommended to try the demo in [Colab](https://colab.research.google.com/drive/133hwDHzsfRYl-nQCUQxJGjcXa5Fae22Z#scrollTo=GWqHlw6kKrbo).
