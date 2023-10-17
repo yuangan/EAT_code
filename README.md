@@ -96,7 +96,6 @@ The videos should contain only one person. We will crop the input video accordin
 **Note**: The preprocessing code has been verified to work correctly with TensorFlow version 1.15.0, which can be installed on Python 3.7. Refer to this [issue]((https://github.com/YudongGuo/AD-NeRF/issues/69)) for more information. We have updated the environment.yml file for preprocessing; please reinstall the **eat** environment if needed.
 
 **TODO:**
-* Evaluation Code
 * Training Dataset
 * Baselines
 * Training Code
