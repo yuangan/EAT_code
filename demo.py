@@ -135,7 +135,7 @@ def prepare_test_data(img_path, audio_path, opt, emotype, use_otherimg=True):
     deep_feature = []
 
     pad, deep_pad = np.load('pad.npy', allow_pickle=True)
-    
+
     if name_len < num_frames:
         diff = num_frames - name_len
         if diff > 2:
@@ -447,7 +447,7 @@ def test(ckpt, emotype, save_dir=" "):
             imageio.mimsave(video_path, predictions_gen, fps=25.0)
 
             save_video = os.path.join(log_dir, f_name)
-            cmd = r'ffmpeg -loglevel error -y -i "%s" -i "%s" -vcodec copy "%s"' % (video_path, audio_path, save_video)
+            cmd = r'ffmpeg -loglevel error -y -i "%s" -i "%s" -vcodec copy -shortest "%s"' % (video_path, audio_path, save_video)
             os.system(cmd)
             os.remove(video_path)
 
