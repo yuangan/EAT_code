@@ -29,6 +29,7 @@ from scipy import signal
 import librosa
 syncnet_mel_step_size = 16
 
+###### CHANGE THE MEAD PATHS HERE ######
 vox_path = '/data2/gy/mead/'
 mead_path = '/data2/gy/mead/'
 poseimg_path = '/data2/gy/mead/'
