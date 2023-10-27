@@ -96,9 +96,10 @@ The videos should contain only one person. We will crop the input video accordin
 **Note**: The preprocessing code has been verified to work correctly with TensorFlow version 1.15.0, which can be installed on Python 3.7. Refer to this [issue]((https://github.com/YudongGuo/AD-NeRF/issues/69)) for more information.
 
 # Emotional Adaptation Training
-- We plan to initially release the training code for the second phase of emotion adaptation.
+- We plan to initially release the training code for the second phase of EAT.
+
 **Data&Ckpt Preparation:**
-- The processed MEAD data used in our paper can be downloaded from [Yandex](https://disk.yandex.com/d/yzk1uTlZgwortw) or [Baidu](https://pan.baidu.com/s/1Y_whpJTB3RtapfenURHewA?pwd=5nni). Once downloaded, configure the paths in `config/deepprompt_eam3d_st_tanh_304_3090_all.yaml` and `frames_dataset_transformer25.py`.
+- The processed MEAD data used in our paper can be downloaded from [Yandex](https://disk.yandex.com/d/yzk1uTlZgwortw) or [Baidu](https://pan.baidu.com/s/1Y_whpJTB3RtapfenURHewA?pwd=5nni). Once downloaded, configure the paths in [config/deepprompt_eam3d_st_tanh_304_3090_all.yaml](https://github.com/yuangan/EAT_code/blob/main/config/deepprompt_eam3d_st_tanh_304_3090_all.yaml#L3) and [frames_dataset_transformer25.py](https://github.com/yuangan/EAT_code/blob/main/frames_dataset_transformer25.py#L32C1-L35C33).
 - We have updated `environment.yaml` to adapt to the training environment. You can install the required packages using pip or mamba, or reinstall the `eat` environment.
 - We have also updated `ckpt.zip`, which contains the pre-trained checkpoints that can be used directly for the second phase of training.
 
@@ -112,7 +113,7 @@ The videos should contain only one person. We will crop the input video accordin
 
 **Evaluation:**
 - The checkpoints and logs are saved at `./output/deepprompt_eam3d_st_tanh_304_3090_all [timestamp]`.
-- Change the dirname in the `test_posedeep_deepprompt_eam3d.sh`, then run the following command for batch testing:
+- Change the data root in [test_posedeep_deepprompt_eam3d.py](https://github.com/yuangan/EAT_code/blob/main/test_posedeep_deepprompt_eam3d.py#L41C1-L43C32) and dirname in [test_posedeep_deepprompt_eam3d.sh](https://github.com/yuangan/EAT_code/blob/main/test_posedeep_deepprompt_eam3d.sh#L1C1-L5C5), then run the following command for batch testing:
   
   ```bash test_posedeep_deepprompt_eam3d.sh```
   
@@ -125,7 +126,7 @@ The videos should contain only one person. We will crop the input video accordin
 * Training Code of A2ET
 
 # Contact
-Our code is intended solely for research purposes. If you have any questions or wish to use it for commercial purposes, please contact me at ganyuan@zju.edu.cn
+Our code is under the CC-BY-NC 4.0 license and intended solely for research purposes. If you have any questions or wish to use it for commercial purposes, please contact me at ganyuan@zju.edu.cn
 
 # Citation
 If you find this code helpful for your research, please cite:
