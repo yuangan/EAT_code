@@ -97,12 +97,12 @@ The videos should contain only one person. We will crop the input video accordin
 
 # Emotional Adaptation Training
 - We plan to initially release the training code for the second phase of emotion adaptation.
-## Data&Ckpt Preparation:
+**Data&Ckpt Preparation:**
 - The processed MEAD data used in our paper can be downloaded from [Yandex](https://disk.yandex.com/d/yzk1uTlZgwortw) or [Baidu](https://pan.baidu.com/s/1Y_whpJTB3RtapfenURHewA?pwd=5nni). Once downloaded, configure the paths in `config/deepprompt_eam3d_st_tanh_304_3090_all.yaml` and `frames_dataset_transformer25.py`.
 - We have updated `environment.yaml` to adapt to the training environment. You can install the required packages using pip or mamba, or reinstall the `eat` environment.
 - We have also updated `ckpt.zip`, which contains the pre-trained checkpoints that can be used directly for the second phase of training.
 
-## Execution:
+**Execution:**
 - Run the following command to start training in 4 GPUs:
 
   ```python -u prompt_st_dp_eam3d.py --config ./config/deepprompt_eam3d_st_tanh_304_3090_all.yaml --device_ids 0,1,2,3 --checkpoint ./ckpt/qvt_img_pca_sync_4_01_11_304.pth.tar```
@@ -110,11 +110,13 @@ The videos should contain only one person. We will crop the input video accordin
 - Note 1: The `batch_size` in the config should be consistent with the number of GPUs. To compute the sync loss, we train consecutive `syncnet_T` frames (which is 5 in our paper) in a batch. Each GPU is assigned a batch during training, consuming around 17GB of VRAM.
 - Note 2: Our checkpoints are saved every half an hour. The results in the paper were obtained using 4 Nvidia 3090 GPUs, training for about 5-6 hours. Please refer to `output/deepprompt_eam3d_st_tanh_304_3090_all\ 03_11_22_15.40.38/log.txt` for the training logs at that time. The convergence speed of the training loss should be similar to what is shown there.
 
-## Validation:
-- The checkpoints and logs are outputted to `./output/deepprompt_eam3d_st_tanh_304_3090_all [timestamp]`.
-- You can use the following command for batch testing of the trained models:
-  ``````
-- The results from sample testing (100 samples) are stored in `./result`. You can use our `evaluation_eat` code to calculate metrics.
+**Evaluation:**
+- The checkpoints and logs are saved at `./output/deepprompt_eam3d_st_tanh_304_3090_all [timestamp]`.
+- Change the dirname in the `test_posedeep_deepprompt_eam3d.sh`, then run the following command for batch testing:
+  
+  ```bash test_posedeep_deepprompt_eam3d.sh```
+  
+- The results from sample testing (100 samples) are stored in `./result`. You can use our [evaluation_eat](test_posedeep_deepprompt_eam3d.sh) code to evaluate.
 
 **TODO:**
 
