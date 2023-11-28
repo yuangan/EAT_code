@@ -99,7 +99,7 @@ The videos should contain only one person. We will crop the input video accordin
 - We plan to initially release the training code for the second phase of EAT.
 
 **Data&Ckpt Preparation:**
-- The processed MEAD data used in our paper can be downloaded from [Yandex](https://disk.yandex.com/d/yzk1uTlZgwortw) or [Baidu](https://pan.baidu.com/s/1Jxzow2anGjMa-y3F8yQwAw?pwd=lsle ). After downloading, concatenate, unzip the files, and update the paths in [deepprompt_eam3d_st_tanh_304_3090_all.yaml](https://github.com/yuangan/EAT_code/blob/main/config/deepprompt_eam3d_st_tanh_304_3090_all.yaml#L3) and [frames_dataset_transformer25.py](https://github.com/yuangan/EAT_code/blob/main/frames_dataset_transformer25.py#L32C1-L35C33).
+- The processed MEAD data used in our paper can be downloaded from [Yandex](https://disk.yandex.com/d/yzk1uTlZgwortw) or [Baidu](https://pan.baidu.com/s/1Jxzow2anGjMa-y3F8yQwAw?pwd=lsle#list/path=%2F). After downloading, concatenate, unzip the files, and update the paths in [deepprompt_eam3d_st_tanh_304_3090_all.yaml](https://github.com/yuangan/EAT_code/blob/main/config/deepprompt_eam3d_st_tanh_304_3090_all.yaml#L3) and [frames_dataset_transformer25.py](https://github.com/yuangan/EAT_code/blob/main/frames_dataset_transformer25.py#L32C1-L35C33).
 - We have updated `environment.yaml` to adapt to the training environment. You can install the required packages using pip or mamba, or reinstall the `eat` environment.
 - We have also updated `ckpt.zip`, which contains the pre-trained checkpoints that can be used directly for the second phase of training.
 
