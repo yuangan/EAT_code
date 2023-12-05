@@ -84,13 +84,17 @@ Then, Execute the test using the following command:
 You can use our [evaluation_eat](test_posedeep_deepprompt_eam3d.sh) code to evaluate.
 
 # Test LRW
-To reproduce the results of LRW as reported in our paper, you need to download and extract the LRW **test** dataset from [here](https://www.robots.ox.ac.uk/~vgg/data/lip_reading/lrw1.html). Due to the limitations of the license, we cannot provide any data here. You will need to preprocess them using our preprocessing code. Then, move and rename the output files as follows:
+To reproduce the results of LRW as reported in our paper, you need to download and extract the LRW **test** dataset from [here](https://www.robots.ox.ac.uk/~vgg/data/lip_reading/lrw1.html). Due to the limitations of the license, we cannot provide any data here. You will need to preprocess them using our [preprocessing code](https://github.com/yuangan/EAT_code/tree/main#preprocessing). Then, move and rename the output files as follows:
 
 'imgs, latents, deepfeature32, poseimg, video_fps25/*.wavs' --> 'lrw/lrw_images, lrw/lrw_latent, lrw/lrw_df32, lrw/poseimg, lrw/lrw_wavs/*.wav'
 
 Change the dataset path in [test_lrw_posedeep_normalize_neutral.py](https://github.com/yuangan/EAT_code/blob/main/test_lrw_posedeep_normalize_neutral.py#L45).
 
 Then, execute the following command:
+
+```CUDA_VISIBLE_DEVICES=0 python test_lrw_posedeep_normalize_neutral.py --name deepprompt_eam3d_all_final_313 --part [0/1/2/3] --mode 0```
+
+or run them concurrently:
 
 ```bash test_lrw_posedeep_normalize_neutral.sh```
 
