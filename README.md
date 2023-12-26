@@ -121,9 +121,10 @@ The videos should contain only one person. We will crop the input video accordin
 
 # A2KP Training
 **Data&Ckpt Preparation:**
-- Download Voxceleb 2 datasets from [the official website](https://www.robots.ox.ac.uk/~vgg/data/voxceleb/vox2.html) and preprocess with our code.
+- Download Voxceleb 2 datasets from [the official website](https://www.robots.ox.ac.uk/~vgg/data/voxceleb/vox2.html) or [here](https://zhuanlan.zhihu.com/p/588668145) and preprocess with our code.
 - Modify the dataset path in [config/pretrain_a2kp_s1.yaml](https://github.com/yuangan/EAT_code/blob/main/config/pretrain_a2kp_s1.yaml#L2), [config/pretrain_a2kp_img_s2.yaml](https://github.com/yuangan/EAT_code/blob/main/config/pretrain_a2kp_img_s2.yaml#L2) and [frames_dataset_transformer25.py](https://github.com/yuangan/EAT_code/blob/main/frames_dataset_transformer25.py#L32C1-L35C33).
 - Download ckpt [000299_1024-checkpoint.pth.tar](https://drive.google.com/file/d/1dBoUjensiX4Ic2jmvL6_nrUeGG7hdOP1/view?usp=sharing) to folder 'ckpt/'
+- Download the [voxselect](https://drive.google.com/file/d/1ME7bcJIvFemBGpI6jdQq99PE0g7SnhIz/view?usp=drive_link) file and untar it to the processed ```vox_path```.
 
 **Execution:**
 - Run the following command to start training A2KP transformer with latent and pca loss in 4 GPUs:
