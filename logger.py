@@ -55,6 +55,67 @@ class Logger:
         torch.save(cpk, cpk_path)
 
     @staticmethod
+    def load_cpk_a2kp(checkpoint_path, generator=None, discriminator=None, kp_detector=None, a2kp=None,
+                 optimizer_generator=None, optimizer_discriminator=None, optimizer_kp_detector=None, optimizer_a2kp=None):
+        checkpoint = torch.load(checkpoint_path, map_location='cpu')
+        if generator is not None:
+            generator.load_state_dict(checkpoint['generator'])
+        if kp_detector is not None:
+            kp_detector.load_state_dict(checkpoint['kp_detector'])
+        if a2kp is not None and 'audio2kptransformer' in checkpoint.keys():
+            a2kp.load_state_dict(checkpoint['audio2kptransformer'])
+        if discriminator is not None:
+            try:
+               discriminator.load_state_dict(checkpoint['discriminator'])
+            except:
+               print ('No discriminator in the state-dict. Dicriminator will be randomly initialized')
+        if optimizer_generator is not None:
+            optimizer_generator.load_state_dict(checkpoint['optimizer_generator'])
+        if optimizer_discriminator is not None:
+            try:
+                optimizer_discriminator.load_state_dict(checkpoint['optimizer_discriminator'])
+            except RuntimeError as e:
+                print ('No discriminator optimizer in the state-dict. Optimizer will be not initialized')
+        if optimizer_kp_detector is not None:
+            optimizer_kp_detector.load_state_dict(checkpoint['optimizer_kp_detector'])
+        if optimizer_a2kp is not None and 'optimizer_audio2kptransformer' in checkpoint.keys():
+            optimizer_a2kp.load_state_dict(checkpoint['optimizer_audio2kptransformer'])
+
+        return checkpoint['epoch']
+
+    @staticmethod
+    def load_cpk_a2kp_diffgen(checkpoint_path, generator=None, discriminator=None, kp_detector=None, a2kp=None,
+                 optimizer_generator=None, optimizer_discriminator=None, optimizer_kp_detector=None, optimizer_a2kp=None):
+        checkpoint = torch.load(checkpoint_path, map_location='cpu')
+        checkpoint2 = torch.load('./ckpt/000299_1024-checkpoint.pth.tar', map_location='cpu')
+        if generator is not None:
+            generator.load_state_dict(checkpoint2['generator'])
+        if kp_detector is not None:
+            kp_detector.load_state_dict(checkpoint['kp_detector'])
+        if a2kp is not None and 'audio2kptransformer' in checkpoint.keys():
+            a2kp.load_state_dict(checkpoint['audio2kptransformer'])
+        if discriminator is not None:
+            try:
+               discriminator.load_state_dict(checkpoint2['discriminator'])
+            except:
+               print ('No discriminator in the state-dict. Dicriminator will be randomly initialized')
+        if optimizer_generator is not None:
+            optimizer_generator.load_state_dict(checkpoint2['optimizer_generator'])
+        if optimizer_discriminator is not None:
+            try:
+                optimizer_discriminator.load_state_dict(checkpoint2['optimizer_discriminator'])
+            except RuntimeError as e:
+                print ('No discriminator optimizer in the state-dict. Optimizer will be not initialized')
+        if optimizer_kp_detector is not None:
+            optimizer_kp_detector.load_state_dict(checkpoint['optimizer_kp_detector'])
+        if optimizer_a2kp is not None and 'optimizer_audio2kptransformer' in checkpoint.keys():
+            optimizer_a2kp.load_state_dict(checkpoint['optimizer_audio2kptransformer'])
+
+        return checkpoint['epoch']
+
+
+
+    @staticmethod
     def load_cpk_a2kp_prompt_sidetuning(checkpoint_path, generator=None, discriminator=None, kp_detector=None, a2kp=None, emotionprompt=None, sidetuning=None,
                  optimizer_generator=None, optimizer_discriminator=None, optimizer_kp_detector=None, optimizer_a2kp=None, optimizer_emotionprompt=None, optimizer_sidetuning=None):
         checkpoint = torch.load(checkpoint_path, map_location='cpu')

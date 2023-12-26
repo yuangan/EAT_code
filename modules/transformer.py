@@ -98,6 +98,88 @@ class TransformerEncoder(nn.Module):
 
         return output
 
+class TransformerDecoder(nn.Module):
+
+    def __init__(self, decoder_layer, num_layers, norm=None, return_intermediate=False):
+        super().__init__()
+        self.layers = _get_clones(decoder_layer, num_layers)
+        self.num_layers = num_layers
+        self.norm = norm
+        self.return_intermediate = return_intermediate
+
+    def forward(self, tgt, memory,  tgt_mask = None,  memory_mask = None, tgt_key_padding_mask = None,
+                memory_key_padding_mask = None,
+                pos = None,
+                query_pos = None):
+        output = tgt+pos+query_pos
+
+        intermediate = []
+
+        for layer in self.layers:
+            output = layer(output, memory, tgt_mask=tgt_mask,
+                           memory_mask=memory_mask,
+                           tgt_key_padding_mask=tgt_key_padding_mask,
+                           memory_key_padding_mask=memory_key_padding_mask,
+                           pos=pos, query_pos=query_pos)
+            if self.return_intermediate:
+                intermediate.append(self.norm(output))
+
+        if self.norm is not None:
+            output = self.norm(output)
+            if self.return_intermediate:
+                intermediate.pop()
+                intermediate.append(output)
+
+        if self.return_intermediate:
+            return torch.stack(intermediate)
+
+        return output.unsqueeze(0)
+
+
+class Transformer(nn.Module):
+
+    def __init__(self, d_model=128, nhead=8, num_encoder_layers=6,
+                 num_decoder_layers=6, dim_feedforward=1024, dropout=0.1,
+                 activation="relu", normalize_before=False,
+                 return_intermediate_dec=True):
+        super().__init__()
+
+        encoder_layer = TransformerEncoderLayer(d_model, nhead, dim_feedforward,
+                                                dropout, activation, normalize_before)
+        encoder_norm = nn.LayerNorm(d_model) if normalize_before else None
+        self.encoder = TransformerEncoder(encoder_layer, num_encoder_layers, encoder_norm)
+
+        decoder_layer = TransformerDecoderLayer(d_model, nhead, dim_feedforward,
+                                                dropout, activation, normalize_before)
+        decoder_norm = nn.LayerNorm(d_model)
+        self.decoder = TransformerDecoder(decoder_layer, num_decoder_layers, decoder_norm,
+                                          return_intermediate=return_intermediate_dec)
+
+        self._reset_parameters()
+
+        self.d_model = d_model
+        self.nhead = nhead
+
+    def _reset_parameters(self):
+        for p in self.parameters():
+            if p.dim() > 1:
+                nn.init.xavier_uniform_(p)
+
+    def forward(self, src, query_embed, pos_embed):
+        # flatten NxCxHxW to HWxNxC
+
+        src = src.permute(1, 0, 2)
+        pos_embed = pos_embed.permute(1, 0, 2)
+        query_embed = query_embed.permute(1, 0, 2)
+
+        tgt = torch.zeros_like(query_embed)
+        memory = self.encoder(src, pos=pos_embed)
+
+        hs = self.decoder(tgt, memory,
+                          pos=pos_embed, query_pos=query_embed)
+        return hs, memory
+
+
 class TransformerDeep(nn.Module):
 
     def __init__(self, d_model=128, nhead=8, num_encoder_layers=6,
@@ -425,6 +507,186 @@ def get_rotation_matrix(yaw, pitch, roll):
     rot_mat = torch.einsum('bij,bjk,bkm->bim', pitch_mat, yaw_mat, roll_mat)
 
     return yaw, pitch, roll, yaw_mat.view(yaw_mat.shape[0], 9), pitch_mat.view(pitch_mat.shape[0], 9), roll_mat.view(roll_mat.shape[0], 9), rot_mat.view(rot_mat.shape[0], 9)
+
+class Audio2kpTransformerBBoxQDeep(nn.Module):
+    def __init__(self, embedding_dim, num_kp, num_w, face_adain=False):
+        super(Audio2kpTransformerBBoxQDeep, self).__init__()
+        self.embedding_dim = embedding_dim
+        self.num_kp = num_kp
+        self.num_w = num_w
+
+
+        self.embedding = nn.Embedding(41, embedding_dim)
+
+        self.face_shrink = nn.Linear(240, 32)
+        self.hp_extractor = nn.Linear(45, 128)
+
+        self.pos_enc = PositionalEncoding(128,20)
+        input_dim = 1
+
+        self.decode_dim = 64
+        self.audio_embedding = nn.Sequential(  # n x 29 x 16
+            nn.Conv1d(29, 32, kernel_size=3, stride=2,
+                      padding=1, bias=True),  # n x 32 x 8
+            nn.LeakyReLU(0.02, True),
+            nn.Conv1d(32, 32, kernel_size=3, stride=2,
+                      padding=1, bias=True),  # n x 32 x 4
+            nn.LeakyReLU(0.02, True),
+            nn.Conv1d(32, 64, kernel_size=3, stride=2,
+                      padding=1, bias=True),  # n x 64 x 2
+            nn.LeakyReLU(0.02, True),
+            nn.Conv1d(64, 64, kernel_size=3, stride=2,
+                      padding=1, bias=True),  # n x 64 x 1
+            nn.LeakyReLU(0.02, True),
+        )
+        self.encoder_fc1 = nn.Sequential(
+            nn.Linear(192, 128),
+            nn.LeakyReLU(0.02, True),
+            nn.Linear(128, 128),
+        )
+
+        self.audio_embedding2 = nn.Sequential(nn.Conv2d(1, 8, (3, 17), stride=(1, 1), padding=(1, 0)),
+                                            #  nn.GroupNorm(4, 8, affine=True),
+                                             BatchNorm2d(8),
+                                             nn.ReLU(inplace=True),
+                                             nn.Conv2d(8, 32, (13, 13), stride=(1, 1), padding=(6, 6)))
+
+        self.audioencoder = AudioEncoder(dim_in=64, style_dim=128, max_conv_dim=512, w_hpf=0, F0_channel=256)
+        # self.mappingnet = MappingNetwork(latent_dim=16, style_dim=128, num_domains=8, hidden_dim=512)
+        # self.stylenet = StyleEncoder(dim_in=64, style_dim=64, num_domains=8, max_conv_dim=512)
+        self.face_adain = face_adain
+        if self.face_adain:
+            self.fadain = AdaIN(style_dim=128, num_features=32)
+        # norm = 'layer_2d' #
+        norm = 'batch'
+
+        self.decodefeature_extract = nn.Sequential(mydownres2Dblock(self.decode_dim,32, normalize = norm),
+                                             mydownres2Dblock(32,48, normalize = norm),
+                                             mydownres2Dblock(48,64, normalize = norm),
+                                             mydownres2Dblock(64,96, normalize = norm),
+                                             mydownres2Dblock(96,128, normalize = norm),
+                                             nn.AvgPool2d(2))
+
+        self.feature_extract = nn.Sequential(mydownres2Dblock(input_dim,32),
+                                             mydownres2Dblock(32,64),
+                                             mydownres2Dblock(64,128),
+                                             mydownres2Dblock(128,128),
+                                             mydownres2Dblock(128,128),
+                                             nn.AvgPool2d(2))
+        self.transformer = Transformer()
+        self.kp = nn.Linear(128, 32)
+
+        # for m in self.modules():
+            # if isinstance(m, nn.Conv2d):
+            #     # nn.init.kaiming_normal_(m.weight, mode='fan_out', nonlinearity='relu')
+            #     nn.init.xavier_uniform_(m.weight, gain=1)
+            
+            # if isinstance(m, nn.Linear):
+            #     # trunc_normal_(m.weight, std=.03)
+            #     nn.init.xavier_uniform_(m.weight, gain=1)
+            #     if isinstance(m, nn.Linear) and m.bias is not None:
+            #         nn.init.constant_(m.bias, 0)
+
+        F0_path = './Utils/JDC/bst.t7'
+        F0_model = JDCNet(num_class=1, seq_len=32)
+        params = torch.load(F0_path, map_location='cpu')['net']
+        F0_model.load_state_dict(params)
+        self.f0_model = F0_model
+
+    def rotation_and_translation(self, headpose, bbs, bs):
+        # print(headpose['roll'].shape, headpose['yaw'].shape, headpose['pitch'].shape, headpose['t'].shape)
+        
+        yaw = headpose_pred_to_degree(headpose['yaw'].reshape(bbs*bs, -1))
+        pitch = headpose_pred_to_degree(headpose['pitch'].reshape(bbs*bs, -1))
+        roll = headpose_pred_to_degree(headpose['roll'].reshape(bbs*bs, -1))
+        yaw_2, pitch_2, roll_2, yaw_v, pitch_v, roll_v, rot_v = get_rotation_matrix(yaw, pitch, roll)
+        t = headpose['t'].reshape(bbs*bs, -1)
+        # hp = torch.cat([yaw, pitch, roll, yaw_v, pitch_v, roll_v, t], dim=1)
+        hp = torch.cat([yaw.unsqueeze(1), pitch.unsqueeze(1), roll.unsqueeze(1), yaw_2, pitch_2, roll_2, yaw_v, pitch_v, roll_v, rot_v, t], dim=1)
+        # hp = torch.cat([yaw, pitch, roll, torch.sin(yaw), torch.sin(pitch), torch.sin(roll), torch.cos(yaw), torch.cos(pitch), torch.cos(roll), t], dim=1)
+        return hp
+
+    def forward(self, x, initial_kp = None, return_strg=False, emoprompt=None, hp=None, side=False):
+        bbs, bs, seqlen, _, _ = x['deep'].shape
+        # ph = x["pho"].reshape(bbs*bs*seqlen, 1)
+        if hp is None:
+            hp = self.rotation_and_translation(x['he_driving'], bbs, bs)
+        hp = self.hp_extractor(hp)
+
+        pose_feature = x["pose"].reshape(bbs*bs*seqlen,1,64,64)
+        # pose_feature = self.down_pose(pose).contiguous()
+        ### phoneme input feature
+        # phoneme_embedding = self.embedding(ph.long())
+        # phoneme_embedding = phoneme_embedding.reshape(bbs*bs*seqlen, 1, 16, 16)
+        # phoneme_embedding = F.interpolate(phoneme_embedding, scale_factor=4)
+        # input_feature = torch.cat((pose_feature, phoneme_embedding), dim=1)
+        # print('input_feature: ', input_feature.shape)
+        # input_feature = phoneme_embedding
+
+        audio = x['deep'].reshape(bbs*bs*seqlen, 16, 29).permute(0, 2, 1)
+        deep_feature = self.audio_embedding(audio).squeeze(-1)# ([264, 32, 16, 16])
+        # print(deep_feature.shape)
+
+        input_feature = pose_feature
+        # print(input_feature.shape)
+        # assert(0)
+        input_feature = self.feature_extract(input_feature).reshape(bbs*bs*seqlen, 128)
+        input_feature = torch.cat([input_feature, deep_feature], dim=1)
+        input_feature = self.encoder_fc1(input_feature).reshape(bbs*bs, seqlen, 128)
+        # phoneme_embedding = self.phoneme_shrink(phoneme_embedding.squeeze(1))# 24*11, 128        
+        input_feature = torch.cat([input_feature, hp.unsqueeze(1)], dim=1)
+
+        ### decode audio feature
+        ### use iteration to avoid batchnorm2d in different audio sequence 
+        decoder_features = []
+        for i in range(bbs):
+            F0 = self.f0_model.get_feature_GAN(x['mel'][i].reshape(bs, 1, 80, seqlen))
+            if emoprompt is None:
+                audio_feature = (self.audioencoder(x['mel'][i].reshape(bs, 1, 80, seqlen), s=None, masks=None, F0=F0))
+            else:
+                audio_feature = (self.audioencoder(x['mel'][i].reshape(bs, 1, 80, seqlen), s=emoprompt[i].unsqueeze(0), masks=None, F0=F0))
+            audio2 = torch.permute(audio_feature, (0, 3, 1, 2)).reshape(bs*seqlen, 1, 64, 80)
+            decoder_feature = self.audio_embedding2(audio2)
+
+            # decoder_feature = torch.cat([decoder_feature, audio2], dim=1)
+            # decoder_feature = F.interpolate(decoder_feature, scale_factor=2)# ([264, 35, 64, 64])
+            face_map = initial_kp["prediction_map"][i].reshape(15*16, 64*64).permute(1, 0).reshape(64*64, 15*16)
+            feature_map = self.face_shrink(face_map).permute(1, 0).reshape(1, 32, 64, 64)
+            if self.face_adain:
+                feature_map = self.fadain(feature_map, emoprompt)
+            decoder_feature = self.decodefeature_extract(torch.cat(
+                (decoder_feature,
+                feature_map.repeat(bs, seqlen, 1, 1, 1).reshape(bs * seqlen, 32, 64, 64)),
+                dim=1)).reshape(bs, seqlen, 128)
+            decoder_features.append(decoder_feature)
+        decoder_feature = torch.cat(decoder_features, dim=0)
+        
+        decoder_feature = torch.cat([decoder_feature, hp.unsqueeze(1)], dim=1)
+
+        # decoder_feature = torch.cat([decoder_feature], dim=1)
+        
+        # a2kp transformer
+        # position embedding
+        if emoprompt is None:
+            posi_em = self.pos_enc(self.num_w*2+1+1) # 11 + headpose token
+        else:
+            posi_em = self.pos_enc(self.num_w*2+1+1+1) # 11 + headpose token + emotion prompt
+            emoprompt = emoprompt.unsqueeze(1).tile(1, bs, 1).reshape(bbs*bs, 128).unsqueeze(1)
+            input_feature = torch.cat([input_feature, emoprompt], dim=1)
+            decoder_feature = torch.cat([decoder_feature, emoprompt], dim=1)
+        out = {}
+        output_feature, memory = self.transformer(input_feature, decoder_feature, posi_em, )
+        output_feature = output_feature[-1, self.num_w] # returned intermediate output [6, 13, bbs*bs, 128]
+        out["emo"] = self.kp(output_feature)
+        if side:
+            input_st = {}
+            input_st['hp'] = hp
+            input_st['decoder_feature'] = decoder_feature
+            input_st['memory'] = memory
+            return out, input_st
+        else:
+            return out
+
 
 class Audio2kpTransformerBBoxQDeepPrompt(nn.Module):
     def __init__(self, embedding_dim, num_kp, num_w, face_ea=False):

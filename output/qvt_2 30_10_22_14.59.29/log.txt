@@ -1,0 +1,8 @@
+00000274) latent_emo - 0.01154; pca_emo - 0.07048
+00000275) latent_emo - 0.00525; pca_emo - 0.03117
+00000276) latent_emo - 0.00450; pca_emo - 0.02647
+00000277) latent_emo - 0.00414; pca_emo - 0.02422
+00000278) latent_emo - 0.00392; pca_emo - 0.02277
+00000279) latent_emo - 0.00377; pca_emo - 0.02186
+00000280) latent_emo - 0.00364; pca_emo - 0.02107
+00000281) latent_emo - 0.00354; pca_emo - 0.02046
