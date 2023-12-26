@@ -31,8 +31,9 @@
 * 07/09/2023 Released the pre-trained weight and inference code.
 * 21/09/2023 Released the preprocessing code. Now, EAT can generate emotional talking-head videos with <strong>any</strong> portrait and driven video.
 * 17/10/2023 Released the evaluation code for the MEAD test results. For more information, please refer to [evaluation_eat](https://github.com/yuangan/evaluation_eat).
-* 27/10/2023 Released the **Emotional Adaptation Training** code. Thank you for your patience~:tada:
+* 27/10/2023 Released the **Emotional Adaptation Training** code. Thank you for your patience~ :tada:
 * 05/12/2023 Released the LRW test code.
+* 26/12/2023 Released the **A2KP Training** code. Thank you for your attention and patience~ :tada:
 
 # Environment
 If you wish to run only our demo, we recommend trying it out in [Colab](https://colab.research.google.com/drive/133hwDHzsfRYl-nQCUQxJGjcXa5Fae22Z#scrollTo=GWqHlw6kKrbo). Please note that our preprocessing and training code should be executed locally, and requires the following environmental configuration:
@@ -114,10 +115,29 @@ The video will be processed and saved in the ```demo/video_processed```. To test
 
 The videos should contain only one person. We will crop the input video according to the estimated landmark of the first frame. Refer to these [video](https://drive.google.com/file/d/1sAoplzY4b6JCW0JQHf_HKEL5luuWuGAk/view?usp=drive_link) for more details.
 
-**Note**: The preprocessing code has been verified to work correctly with TensorFlow version 1.15.0, which can be installed on Python 3.7. Refer to this [issue]((https://github.com/YudongGuo/AD-NeRF/issues/69)) for more information.
+**Note 1**: The preprocessing code has been verified to work correctly with TensorFlow version 1.15.0, which can be installed on Python 3.7. Refer to this [issue]((https://github.com/YudongGuo/AD-NeRF/issues/69)) for more information.
+
+**Note 2**: Extract the bbox for training with ```preprocess/extract_bbox.py```.
+
+# A2KP Training
+**Data&Ckpt Preparation:**
+- Download Voxceleb 2 datasets from [the official website](https://www.robots.ox.ac.uk/~vgg/data/voxceleb/vox2.html) and preprocess with our code.
+- Modify the dataset path in [config/pretrain_a2kp_s1.yaml](https://github.com/yuangan/EAT_code/blob/main/config/pretrain_a2kp_s1.yaml#L2), [config/pretrain_a2kp_img_s2.yaml](https://github.com/yuangan/EAT_code/blob/main/config/pretrain_a2kp_img_s2.yaml#L2) and [frames_dataset_transformer25.py](https://github.com/yuangan/EAT_code/blob/main/frames_dataset_transformer25.py#L32C1-L35C33).
+- Download ckpt [000299_1024-checkpoint.pth.tar](https://drive.google.com/file/d/1dBoUjensiX4Ic2jmvL6_nrUeGG7hdOP1/view?usp=sharing) to folder 'ckpt/'
+
+**Execution:**
+- Run the following command to start training A2KP transformer with latent and pca loss in 4 GPUs:
+
+  ```python pretrain_a2kp.py --config config/pretrain_a2kp_s1.yaml --device_ids 0,1,2,3 --checkpoint ./ckpt/pretrain_new_274.pth.tar```
+
+- **Note:** Stop training when the loss converges. We trained for 8 epochs here. Our training log is at: ```./output/qvt_2 30_10_22_14.59.29/log.txt```. Copy and rename the output ckpt to folder ```./ckpt```, for example: ```ckpt/qvt_2_1030_281.pth.tar```
+- Run the following command to start training A2KP transformer with all loss in 4 GPUs:
+  
+  ```python pretrain_a2kp_img.py --config config/pretrain_a2kp_img_s2.yaml --device_ids 0,1,2,3 --checkpoint ./ckpt/qvt_2_1030_281.pth.tar```
+
+- **Note:** Stop training when the loss converges. We trained for 24 epochs here. Our training log is at: ```./output/qvt_img_pca_sync_4 01_11_22_15.47.54/log.txt```
 
 # Emotional Adaptation Training
-- We plan to initially release the training code for the second phase of EAT.
 
 **Data&Ckpt Preparation:**
 - The processed MEAD data used in our paper can be downloaded from [Yandex](https://disk.yandex.com/d/yzk1uTlZgwortw) or [Baidu](https://pan.baidu.com/s/1Jxzow2anGjMa-y3F8yQwAw?pwd=lsle#list/path=%2F). After downloading, concatenate, unzip the files, and update the paths in [deepprompt_eam3d_st_tanh_304_3090_all.yaml](https://github.com/yuangan/EAT_code/blob/main/config/deepprompt_eam3d_st_tanh_304_3090_all.yaml#L3) and [frames_dataset_transformer25.py](https://github.com/yuangan/EAT_code/blob/main/frames_dataset_transformer25.py#L32C1-L35C33).
@@ -129,8 +149,8 @@ The videos should contain only one person. We will crop the input video accordin
 
   ```python -u prompt_st_dp_eam3d.py --config ./config/deepprompt_eam3d_st_tanh_304_3090_all.yaml --device_ids 0,1,2,3 --checkpoint ./ckpt/qvt_img_pca_sync_4_01_11_304.pth.tar```
 
-- Note 1: The `batch_size` in the config should be consistent with the number of GPUs. To compute the sync loss, we train consecutive `syncnet_T` frames (which is 5 in our paper) in a batch. Each GPU is assigned a batch during training, consuming around 17GB of VRAM.
-- Note 2: Our checkpoints are saved every half an hour. The results in the paper were obtained using 4 Nvidia 3090 GPUs, training for about 5-6 hours. Please refer to `output/deepprompt_eam3d_st_tanh_304_3090_all\ 03_11_22_15.40.38/log.txt` for the training logs at that time. The convergence speed of the training loss should be similar to what is shown there.
+- **Note 1**: The `batch_size` in the config should be consistent with the number of GPUs. To compute the sync loss, we train consecutive `syncnet_T` frames (which is 5 in our paper) in a batch. Each GPU is assigned a batch during training, consuming around 17GB of VRAM.
+- **Note 2**: Our checkpoints are saved every half an hour. The results in the paper were obtained using 4 Nvidia 3090 GPUs, training for about 5-6 hours. Please refer to `output/deepprompt_eam3d_st_tanh_304_3090_all\ 03_11_22_15.40.38/log.txt` for the training logs at that time. The convergence speed of the training loss should be similar to what is shown there.
 
 **Evaluation:**
 - The checkpoints and logs are saved at `./output/deepprompt_eam3d_st_tanh_304_3090_all [timestamp]`.
@@ -139,12 +159,6 @@ The videos should contain only one person. We will crop the input video accordin
   ```bash test_posedeep_deepprompt_eam3d.sh```
   
 - The results from sample testing (100 samples) are stored in `./result`. You can use our [evaluation_eat](test_posedeep_deepprompt_eam3d.sh) code to evaluate.
-
-**TODO:**
-
-* The Results of all Baselines
-* Prepare Training Dataset
-* Training Code of A2ET
 
 # Contact
 Our code is under the CC-BY-NC 4.0 license and intended solely for research purposes. If you have any questions or wish to use it for commercial purposes, please contact me at ganyuan@zju.edu.cn
