@@ -32,6 +32,8 @@
 * 21/09/2023 Released the preprocessing code. Now, EAT can generate emotional talking-head videos with <strong>any</strong> portrait and driven video.
 * 17/10/2023 Released the evaluation code for the MEAD test results. For more information, please refer to [evaluation_eat](https://github.com/yuangan/evaluation_eat).
 * 27/10/2023 Released the **Emotional Adaptation Training** code. Thank you for your patience~:tada:
+* 05/12/2023 Released the LRW test code.
+
 # Environment
 If you wish to run only our demo, we recommend trying it out in [Colab](https://colab.research.google.com/drive/133hwDHzsfRYl-nQCUQxJGjcXa5Fae22Z#scrollTo=GWqHlw6kKrbo). Please note that our preprocessing and training code should be executed locally, and requires the following environmental configuration:
 
@@ -78,6 +80,25 @@ Then, Execute the test using the following command:
 - **Parameters**:
   - **part**: Choose from [0, 1, 2, 3]. These represent the four test parts in the MEAD test data.
   - **mode**: Choose from [0, 1]. Where `0` tests only 100 samples in total, and `1` tests all samples (985 in total).
+
+You can use our [evaluation_eat](test_posedeep_deepprompt_eam3d.sh) code to evaluate.
+
+# Test LRW
+To reproduce the results of LRW as reported in our paper, you need to download and extract the LRW **test** dataset from [here](https://www.robots.ox.ac.uk/~vgg/data/lip_reading/lrw1.html). Due to the limitations of the license, we cannot provide any video data. (The name of the test files can be found [here](https://drive.google.com/file/d/1WYXBLlp9jwnGsf0V8eQf3aKCXJLGeTS3/view?usp=sharing) for validation.) After downloading LRW, You will need to preprocess them using our [preprocessing code](https://github.com/yuangan/EAT_code/tree/main#preprocessing). Then, move and rename the output files as follows:
+
+'imgs, latents, deepfeature32, poseimg, video_fps25/*.wavs' --> 'lrw/lrw_images, lrw/lrw_latent, lrw/lrw_df32, lrw/poseimg, lrw/lrw_wavs/*.wav'
+
+Change the dataset path in [test_lrw_posedeep_normalize_neutral.py](https://github.com/yuangan/EAT_code/blob/main/test_lrw_posedeep_normalize_neutral.py#L45).
+
+Then, execute the following command:
+
+```CUDA_VISIBLE_DEVICES=0 python test_lrw_posedeep_normalize_neutral.py --name deepprompt_eam3d_all_final_313 --part [0/1/2/3] --mode 0```
+
+or run them concurrently:
+
+```bash test_lrw_posedeep_normalize_neutral.sh```
+
+The results will be saved in './result_lrw/'.
 
 # Preprocessing
 If you want to test with your own driven video that includes audio, place your video (which should have audio) in the ```preprocess/video```. Then execute the preprocessing code:
