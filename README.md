@@ -162,7 +162,7 @@ The videos should contain only one person. We will crop the input video accordin
 - The results from sample testing (100 samples) are stored in `./result`. You can use our [evaluation_eat](test_posedeep_deepprompt_eam3d.sh) code to evaluate.
 
 # Contact
-Our code is under the CC-BY-NC 4.0 license and intended solely for research purposes. If you have any questions or wish to use it for commercial purposes, please contact me at ganyuan@zju.edu.cn
+Our code is under the CC-BY-NC 4.0 license and intended solely for research purposes. If you have any questions or wish to use it for commercial purposes, please contact us at ganyuan@zju.edu.cn and yangyics@zju.edu.cn
 
 # Citation
 If you find this code helpful for your research, please cite:
