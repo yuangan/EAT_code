@@ -65,7 +65,9 @@ Then, run the demo with:
 
 **Note 1**: Place your own images in ```./demo/imgs/``` and run the above command to generate talking-head videos with aligned new portraits. If you prefer not to align your portrait, simply place your cropped image (256x256) in ```./demo/imgs_cropped```. Due to the background used in the MEAD training set, results tend to be better with a similar background.
 
-**Note 2**: Replace the ```video_name/video_name.wav``` and deepspeech feature ```video_name/deepfeature32/video_name.npy```, you can test with a new wav. The output length will depend on the shortest length of the audio and driven poses. Refer to [here](https://github.com/yuangan/EAT_code/blob/main/demo.py#L139) for more details.
+**Note 2**: To test with a custom audio, you need to replace the ```video_name/video_name.wav``` and deepspeech feature ```video_name/deepfeature32/video_name.npy```. The output length will depend on the shortest length of the audio and driven poses. Refer to [here](https://github.com/yuangan/EAT_code/blob/main/demo.py#L139) for more details.
+
+**Note 3**: The audio used in our work should be sampled at 16,000 Hz and the corresponding video should have a frame rate of 25 fps.
 
 # Test MEAD
 To reproduce the results of MEAD as reported in our paper, follow these steps:
