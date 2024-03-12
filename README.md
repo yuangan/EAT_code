@@ -29,13 +29,13 @@
 
 **News:**
 * 10/03/2024 Released all evaluation codes of the LRW test set, please refer to [here](https://github.com/yuangan/evaluation_eat) for more details.
-* 07/09/2023 Released the pre-trained weight and inference code.
-* 21/09/2023 Released the preprocessing code. Now, EAT can generate emotional talking-head videos with <strong>any</strong> portrait and driven video.
-* 17/10/2023 Released the evaluation code for the MEAD test results. For more information, please refer to [evaluation_eat](https://github.com/yuangan/evaluation_eat).
-* 27/10/2023 Released the **Emotional Adaptation Training** code. Thank you for your patience~ :tada:
-* 05/12/2023 Released the LRW test code.
 * 26/12/2023 Released the **A2KP Training** code. Thank you for your attention and patience~ :tada:
-
+* 05/12/2023 Released the LRW test code.
+* 27/10/2023 Released the **Emotional Adaptation Training** code. Thank you for your patience~ :tada:
+* 17/10/2023 Released the evaluation code for the MEAD test results. For more information, please refer to [evaluation_eat](https://github.com/yuangan/evaluation_eat).
+* 21/09/2023 Released the preprocessing code. Now, EAT can generate emotional talking-head videos with <strong>any</strong> portrait and driven video.
+* 07/09/2023 Released the pre-trained weight and inference code.
+  
 # Environment
 If you wish to run only our demo, we recommend trying it out in [Colab](https://colab.research.google.com/drive/133hwDHzsfRYl-nQCUQxJGjcXa5Fae22Z#scrollTo=GWqHlw6kKrbo). Please note that our preprocessing and training code should be executed locally, and requires the following environmental configuration:
 
