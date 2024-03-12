@@ -28,7 +28,7 @@
 
 
 **News:**
-* 10/03/2024 Released all evaluation codes of the LRW test set, please refer to [here](https://github.com/yuangan/evaluation_eat) for more details.
+* 10/03/2024 Released all evaluation codes used in our paper, please refer to [here](https://github.com/yuangan/evaluation_eat) for more details.
 * 26/12/2023 Released the **A2KP Training** code. Thank you for your attention and patience~ :tada:
 * 05/12/2023 Released the LRW test code.
 * 27/10/2023 Released the **Emotional Adaptation Training** code. Thank you for your patience~ :tada:
