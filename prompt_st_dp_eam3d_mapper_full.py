@@ -47,7 +47,7 @@ from train_transformer import train_batch_prompt_mapper3 as train
 # text = [    'She is talking with her nose wrinkled.']
 # text = [ 'She is talking while feeling very painful.']
 # text = ['She is talking with a fierce expression.']
-text = ['She is talking while crying hard']
+text = ['She is talking while crying hard.']
 # text = [    'She is talking with her nose wrinkled.']
 # text = [    'The woman is smiling and shocked']
 print(text)
