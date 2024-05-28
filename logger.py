@@ -185,8 +185,8 @@ class Logger:
         if (self.epoch + 1) % self.checkpoint_freq == 0:
             self.save_cpk()
         self.log_scores(self.names)
-        # if save_visualize and self.epoch % 10 == 0:
-        #     self.visualize_rec(inp, out)
+        if save_visualize: #and self.epoch % 10 == 0:
+            self.visualize_rec(inp, out)
 
 
 class Visualizer:
@@ -250,7 +250,8 @@ class Visualizer:
         #     images.append((transformed, transformed_kp))
 
         # Driving image with keypoints
-        kp_driving = out['kp_driving']['value'][:, :, :2].data.cpu().numpy()    # 3d -> 2d
+        # kp_driving = out['kp_driving']['value'][:, :, :2].data.cpu().numpy()    # 3d -> 2d
+        kp_driving = out['kp_driving'][0][:, :, :2].data.cpu().numpy()    # 3d -> 2d
         driving = driving.data.cpu().numpy().reshape(sync_T*bs, 3, 256,256)
         driving = np.transpose(driving, [0, 2, 3, 1])
         images.append((driving, kp_driving))
