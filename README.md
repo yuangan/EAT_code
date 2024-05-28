@@ -28,6 +28,7 @@
 
 
 **News:**
+* 28/05/2024 Released example scripts for the zero-shot editing with CLIP loss. Thank you for your attention~ :tada:
 * 10/03/2024 Released all evaluation codes used in our paper, please refer to [here](https://github.com/yuangan/evaluation_eat) for more details.
 * 26/12/2023 Released the **A2KP Training** code. Thank you for your attention and patience~ :tada:
 * 05/12/2023 Released the LRW test code.
@@ -163,6 +164,22 @@ The videos should contain only one person. We will crop the input video accordin
   ```bash test_posedeep_deepprompt_eam3d.sh```
   
 - The results from sample testing (100 samples) are stored in `./result`. You can use our [evaluation_eat](test_posedeep_deepprompt_eam3d.sh) code to evaluate.
+
+# Zero-shot Editing
+- Install our CLIP: ```pip install git+https://github.com/yuangan/CLIP.git```. (We modified the model.py in the repository.)
+- Modify the data path in `pretrain_test_posedeep_deepprompt_eam3d_newstyle4.py`, then fine-tune Mead dataset with the text "She is talking while crying hard.":
+  ```
+  CUDA_VISIBLE_DEVICES=0 python -u prompt_st_dp_eam3d_mapper_full.py --config config/prompt_st_eam3d_tanh_mapper.yaml  --device_ids 0  --checkpoint ./ckpt/deepprompt_eam3d_all_final_313.pth.tar
+  ```
+- Test the fine-tuned Mead dataset with:
+  ```
+  CUDA_VISIBLE_DEVICES=0 python pretrain_test_posedeep_deepprompt_eam3d_newstyle4.py --name prompt_st_eam3d_tanh_mapper\ xxxxxx(replace with your path) --part 3 --mode 1
+  ```
+- Similarly, you can train and test the LRW datasets with the text "He is talking with a fierce expression.":
+  ```
+  CUDA_VISIBLE_DEVICES=0 python -u prompt_st_dp_eam3d_mapper_full_lrw.py --config config/prompt_st_eam3d_tanh_mapper.yaml  --device_ids 0  --checkpoint ./ckpt/deepprompt_eam3d_all_final_313.pth.tar
+  CUDA_VISIBLE_DEVICES=0 python pretrain_test_posedeep_deepprompt_eam3d_newstyle4_lrw.py --name prompt_st_eam3d_tanh_mapper\ xxxxxx(replace with your path) --part 3 --mode 1
+  ```
 
 # Contact
 Our code is under the CC-BY-NC 4.0 license and intended solely for research purposes. If you have any questions or wish to use it for commercial purposes, please contact us at ganyuan@zju.edu.cn and yangyics@zju.edu.cn
