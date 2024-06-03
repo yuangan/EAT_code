@@ -28,7 +28,7 @@ dependencies:
     - scipy
     - soundfile==0.12.1
     - tqdm==4.65.0
-    - imageio-ffmpeg
+    - imageio-ffmpeg==0.4.9
     - pandas
     - resampy
     - python_speech_features
