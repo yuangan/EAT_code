@@ -34,3 +34,4 @@ dependencies:
     - python_speech_features
     - protobuf==3.20.0
     - imutils
+    - git+https://github.com/yuangan/CLIP.git
