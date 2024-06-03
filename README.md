@@ -171,11 +171,11 @@ The videos should contain only one person. We will crop the input video accordin
   ```
   CUDA_VISIBLE_DEVICES=0 python -u prompt_st_dp_eam3d_mapper_full.py --config config/prompt_st_eam3d_tanh_mapper.yaml  --device_ids 0  --checkpoint ./ckpt/deepprompt_eam3d_all_final_313.pth.tar
   ```
-- Test the fine-tuned Mead dataset with:
+- Test the fine-tuned model. The results would be saved in './result_mapper':
   ```
   CUDA_VISIBLE_DEVICES=0 python pretrain_test_posedeep_deepprompt_eam3d_newstyle4.py --name prompt_st_eam3d_tanh_mapper\ xxxxxx(replace with your path) --part 3 --mode 1
   ```
-- Similarly, you can train and test the LRW datasets with the text "He is talking with a fierce expression.":
+- Similarly, you can fine-tune and test the LRW datasets with the text "He is talking with a fierce expression.":
   ```
   CUDA_VISIBLE_DEVICES=0 python -u prompt_st_dp_eam3d_mapper_full_lrw.py --config config/prompt_st_eam3d_tanh_mapper.yaml  --device_ids 0  --checkpoint ./ckpt/deepprompt_eam3d_all_final_313.pth.tar
   CUDA_VISIBLE_DEVICES=0 python pretrain_test_posedeep_deepprompt_eam3d_newstyle4_lrw.py --name prompt_st_eam3d_tanh_mapper\ xxxxxx(replace with your path) --part 3 --mode 1
