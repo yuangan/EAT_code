@@ -19,7 +19,7 @@ dependencies:
     - imageio==2.9.0
     - iou==0.1.0
     - munch==4.0.0
-    - numpy
+    - numpy<=1.25.5
     - opencv_contrib_python==4.7.0.72
     - opencv_python==4.7.0.72
     - opencv_python_headless==4.7.0.68
