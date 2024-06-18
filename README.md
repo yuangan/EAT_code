@@ -119,7 +119,7 @@ The video will be processed and saved in the ```demo/video_processed```. To test
 
 The videos should contain only one person. We will crop the input video according to the estimated landmark of the first frame. Refer to these [video](https://drive.google.com/file/d/1sAoplzY4b6JCW0JQHf_HKEL5luuWuGAk/view?usp=drive_link) for more details.
 
-**Note 1**: The preprocessing code has been verified to work correctly with TensorFlow version 1.15.0, which can be installed on Python 3.7. Refer to this [issue]((https://github.com/YudongGuo/AD-NeRF/issues/69)) for more information.
+**Note 1**: The preprocessing code has been verified to work correctly with TensorFlow version 1.15.0, which can be installed on Python 3.7. Refer to this [issue](https://github.com/YudongGuo/AD-NeRF/issues/69) for more information.
 
 **Note 2**: Extract the bbox for training with ```preprocess/extract_bbox.py```.
 
