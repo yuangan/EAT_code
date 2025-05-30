@@ -220,12 +220,12 @@ def test_mead(ckpt, part=0, save_dir=" "):
             all_wavs2.append(i)
     all_wavs2.sort()
 
-    ph_paths = []
+    # ph_paths = []
     for i in all_wavs2:
         isp = os.path.basename(i)[:-4].split('_')
         lable_index = emo_label.index(isp[1])
         emoname = emo_label_full[lable_index]
-        ph_paths.append(f'{root_mead}/json/{isp[0]}/json/{emoname}/level_{isp[2]}/{isp[3]}.json')
+        # ph_paths.append(f'{root_mead}/json/{isp[0]}/json/{emoname}/level_{isp[2]}/{isp[3]}.json')
     loss_latents = []
     loss_pca_emos = []
     loss_y = []
